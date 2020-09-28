@@ -3,7 +3,7 @@ import numpy as np
 from .base_agent import BaseAgent
 from cs285.policies.MLP_policy import MLPPolicyPG
 from cs285.infrastructure.replay_buffer import ReplayBuffer
-
+from cs285.infrastructure import utils
 
 class PGAgent(BaseAgent):
     def __init__(self, env, agent_params):
@@ -102,7 +102,7 @@ class PGAgent(BaseAgent):
             ## TODO: standardize the advantages to have a mean of zero
             ## and a standard deviation of one
             ## HINT: there is a `normalize` function in `infrastructure.utils`
-            advantages = infrastructure.utils.normalize(advantages, 0, 1)
+            advantages = utils.normalize(advantages, 0, 1)
 
         return advantages
 
