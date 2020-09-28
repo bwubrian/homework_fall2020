@@ -144,48 +144,48 @@ class MLPPolicyPG(MLPPolicy):
             # by the `forward` method
         # HINT3: don't forget that `optimizer.step()` MINIMIZES a loss
 
-        print("IM DEBUG")
+        # print("IM DEBUG")
 
         
-        print("observations:")
-        print(observations.shape)
-        print(observations)
-        print("="*10)    
-        print("actions:")
-        print(actions.shape)
-        print(actions)
-        print("="*10)    
-        print("advantages:")
-        print(advantages.shape)
-        print(advantages)
-        print("="*10)    
+        # print("observations:")
+        # print(observations.shape)
+        # print(observations)
+        # print("="*10)    
+        # print("actions:")
+        # print(actions.shape)
+        # print(actions)
+        # print("="*10)    
+        # print("advantages:")
+        # print(advantages.shape)
+        # print(advantages)
+        # print("="*10)    
 
 
         action_distribution = self(observations)
-        print("action_distribution:")
-        print(action_distribution)
-        print("="*10)  
+        # print("action_distribution:")
+        # print(action_distribution)
+        # print("="*10)  
 
         predicted_actions = action_distribution.sample()
 
-        print("predicted_actions:")
-        print(predicted_actions.shape)
-        print(predicted_actions)
-        print(max(predicted_actions))
-        print("="*10)  
+        # print("predicted_actions:")
+        # print(predicted_actions.shape)
+        # print(predicted_actions)
+        # print(max(predicted_actions))
+        # print("="*10)  
 
         logprobs = action_distribution.log_prob(predicted_actions)
-        print("logprobs:")
-        print(logprobs.shape)
-        print(logprobs)
-        print("="*10)  
+        # print("logprobs:")
+        # print(logprobs.shape)
+        # print(logprobs)
+        # print("="*10)  
 
         product_list = torch.mul(logprobs, advantages)
-        print("product_list:")
-        print(product_list.shape)
-        print(product_list)
-        print("="*10)  
-        loss = -torch.sum(product_list)
+        # print("product_list:")
+        # print(product_list.shape)
+        # print(product_list)
+        # print("="*10)  
+        # loss = -torch.sum(product_list)
 
         # TODO: optimize `loss` using `self.optimizer`
         # HINT: remember to `zero_grad` first
