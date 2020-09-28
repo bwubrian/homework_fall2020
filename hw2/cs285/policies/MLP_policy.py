@@ -179,7 +179,13 @@ class MLPPolicyPG(MLPPolicy):
         print(logprobs.shape)
         print(logprobs)
         print("="*10)  
-        loss = -torch.sum()
+
+        product_list = torch.mul(logprobs, advantages)
+        print("product_list:")
+        print(product_list.shape)
+        print(product_list)
+        print("="*10)  
+        loss = -torch.sum(product_list)
 
         # TODO: optimize `loss` using `self.optimizer`
         # HINT: remember to `zero_grad` first
