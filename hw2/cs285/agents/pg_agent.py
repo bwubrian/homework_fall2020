@@ -46,7 +46,7 @@ class PGAgent(BaseAgent):
 
         # TODO: step 3: use all datapoints (s_t, a_t, q_t, adv_t) to update the PG actor/policy
         ## HINT: `train_log` should be returned by your actor update method
-        train_log = TODO
+        train_log = self.actor.update(observations, actions, advantages, q_values)
 
         return train_log
 
@@ -102,7 +102,7 @@ class PGAgent(BaseAgent):
             ## TODO: standardize the advantages to have a mean of zero
             ## and a standard deviation of one
             ## HINT: there is a `normalize` function in `infrastructure.utils`
-            advantages = TODO
+            advantages = infrastructure.utils.normalize(advantages, 0, 1)
 
         return advantages
 
@@ -131,7 +131,11 @@ class PGAgent(BaseAgent):
         # TODO: create list_of_discounted_returns
         # Hint: note that all entries of this output are equivalent
             # because each sum is from 0 to T (and doesnt involve t)
-
+        
+        total_rewards = 0
+        for t in range(len(rewards)):
+            total_rewards += np.power(self.gamma, t) * rewards[t]
+        list_of_discounted_returns = [total_rewards] * len(rewards)
         return list_of_discounted_returns
 
     def _discounted_cumsum(self, rewards):
@@ -146,6 +150,9 @@ class PGAgent(BaseAgent):
             # because the summation happens over [t, T] instead of [0, T]
         # HINT2: it is possible to write a vectorized solution, but a solution
             # using a for loop is also fine
-
+        backwards_rewards = [rewards[-1]]
+        for reward in reversed(rewards)[1:]:
+            backwards_rewards.append(self.gamma * backwards_rewards[-1] + reward)
+        list_of_discounted_cumsums = reversed(backwards_rewards)
         return list_of_discounted_cumsums
 
