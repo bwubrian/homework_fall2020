@@ -145,8 +145,29 @@ class MLPPolicyPG(MLPPolicy):
         # HINT3: don't forget that `optimizer.step()` MINIMIZES a loss
 
         print("IM DEBUG")
+
+        
+        print("observations:")
+        print(observations.shape)
+        print(observations)
+        print("="*10)    
+        print("actions:")
+        print(actions.shape)
+        print(actions)
+        print("="*10)    
+        print("advantages:")
+        print(advantages.shape)
+        print(advantages)
+        print("="*10)    
+
+
         action_distribution = self(observations)
-        predicted_actions = action_distribution.rsample()
+        print("action_distribution:")
+        print(action_distribution.shape)
+        print(action_distribution)
+        print("="*10)  
+
+        predicted_actions = action_distribution.sample()
         action_distribution.log_prob(predicted_actions)
         
         loss = -torch.sum()
