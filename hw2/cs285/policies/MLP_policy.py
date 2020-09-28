@@ -171,10 +171,14 @@ class MLPPolicyPG(MLPPolicy):
         print("predicted_actions:")
         print(predicted_actions.shape)
         print(predicted_actions)
+        print(max(predicted_actions))
         print("="*10)  
 
-        action_distribution.log_prob(predicted_actions)
-        
+        logprobs = action_distribution.log_prob(predicted_actions)
+        print("logprobs:")
+        print(logprobs.shape)
+        print(logprobs)
+        print("="*10)  
         loss = -torch.sum()
 
         # TODO: optimize `loss` using `self.optimizer`
