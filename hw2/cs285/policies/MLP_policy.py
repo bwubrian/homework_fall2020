@@ -190,6 +190,8 @@ class MLPPolicyPG(MLPPolicy):
             ## avoid any subtle broadcasting bugs that can arise when dealing with arrays of shape
             ## [ N ] versus shape [ N x 1 ]
             ## HINT: you can use `squeeze` on torch tensors to remove dimensions of size 1
+            print(baseline_predictions.shape)
+            print(targets.shape)
             assert baseline_predictions.shape == targets.shape
             
             # TODO: compute the loss that should be optimized for training the baseline MLP (`self.baseline`)
