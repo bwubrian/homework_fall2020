@@ -163,11 +163,16 @@ class MLPPolicyPG(MLPPolicy):
 
         action_distribution = self(observations)
         print("action_distribution:")
-        print(action_distribution.shape)
         print(action_distribution)
         print("="*10)  
 
         predicted_actions = action_distribution.sample()
+
+        print("predicted_actions:")
+        print(predicted_actions.shape)
+        print(predicted_actions)
+        print("="*10)  
+
         action_distribution.log_prob(predicted_actions)
         
         loss = -torch.sum()
