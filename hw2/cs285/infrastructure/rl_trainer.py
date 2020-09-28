@@ -173,9 +173,9 @@ class RL_Trainer(object):
             print('\nCollecting train rollouts to be used for saving videos...')
             train_video_paths = utils.sample_n_trajectories(self.env, collect_policy, MAX_NVIDEO, MAX_VIDEO_LEN, True)
 
-        if save_expert_data_to_disk and itr == 0:
-            with open('expert_data_{}.pkl'.format(self.params['env_name']), 'wb') as file:
-                pickle.dump(paths, file)
+        # if save_expert_data_to_disk and itr == 0:
+        #     with open('expert_data_{}.pkl'.format(self.params['env_name']), 'wb') as file:
+        #         pickle.dump(paths, file)
 
         return paths, envsteps_this_batch, train_video_paths
 
