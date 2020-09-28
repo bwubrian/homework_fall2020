@@ -185,7 +185,7 @@ class MLPPolicyPG(MLPPolicy):
         # print(product_list.shape)
         # print(product_list)
         # print("="*10)  
-        loss = -torch.sum(product_list)
+        loss = torch.sum(product_list)
 
         # TODO: optimize `loss` using `self.optimizer`
         # HINT: remember to `zero_grad` first
