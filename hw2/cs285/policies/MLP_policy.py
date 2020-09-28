@@ -10,7 +10,7 @@ from torch import distributions
 
 from cs285.infrastructure import pytorch_util as ptu
 from cs285.policies.base_policy import BasePolicy
-
+from cs285.infrastructure import utils
 
 class MLPPolicy(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
 
@@ -196,8 +196,8 @@ class MLPPolicyPG(MLPPolicy):
         if self.nn_baseline:
             ## TODO: normalize the q_values to have a mean of zero and a standard deviation of one
             ## HINT: there is a `normalize` function in `infrastructure.utils`
-            targets = infrastructure.utils.normalize(q_values, 0, 1)
             targets = ptu.from_numpy(targets)
+            targets = utils.normalize(q_values, np.mean(q_values), np.std(q_values))
 
             ## TODO: use the `forward` method of `self.baseline` to get baseline predictions
             baseline_predictions = self.baseline.forward(observations) ## ???
