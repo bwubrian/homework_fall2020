@@ -151,8 +151,8 @@ class PGAgent(BaseAgent):
         # HINT2: it is possible to write a vectorized solution, but a solution
             # using a for loop is also fine
         backwards_rewards = [rewards[-1]]
-        for reward in reversed(rewards)[1:]:
+        for reward in list(reversed(rewards))[1:]:
             backwards_rewards.append(self.gamma * backwards_rewards[-1] + reward)
-        list_of_discounted_cumsums = reversed(backwards_rewards)
+        list_of_discounted_cumsums = list(reversed(backwards_rewards))
         return list_of_discounted_cumsums
 
