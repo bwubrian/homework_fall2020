@@ -166,7 +166,7 @@ class MLPPolicyPG(MLPPolicy):
         # print(action_distribution)
         # print("="*10)  
 
-        predicted_actions = action_distribution.sample()
+        #predicted_actions = action_distribution.sample()
 
         # print("predicted_actions:")
         # print(predicted_actions.shape)
@@ -174,7 +174,7 @@ class MLPPolicyPG(MLPPolicy):
         # print(max(predicted_actions))
         # print("="*10)  
 
-        logprobs = action_distribution.log_prob(predicted_actions)
+        logprobs = action_distribution.log_prob(actions)
         # print("logprobs:")
         # print(logprobs.shape)
         # print(logprobs)
@@ -185,7 +185,7 @@ class MLPPolicyPG(MLPPolicy):
         # print(product_list.shape)
         # print(product_list)
         # print("="*10)  
-        loss = torch.sum(product_list)
+        loss = -torch.sum(product_list)
 
         # TODO: optimize `loss` using `self.optimizer`
         # HINT: remember to `zero_grad` first
