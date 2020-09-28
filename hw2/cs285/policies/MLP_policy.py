@@ -146,20 +146,6 @@ class MLPPolicyPG(MLPPolicy):
 
         # print("IM DEBUG")
 
-        
-        # print("observations:")
-        # print(observations.shape)
-        # print(observations)
-        # print("="*10)    
-        # print("actions:")
-        # print(actions.shape)
-        # print(actions)
-        # print("="*10)    
-        # print("advantages:")
-        # print(advantages.shape)
-        # print(advantages)
-        # print("="*10)    
-
 
         action_distribution = self(observations)
         # print("action_distribution:")
@@ -209,11 +195,13 @@ class MLPPolicyPG(MLPPolicy):
             
             # TODO: compute the loss that should be optimized for training the baseline MLP (`self.baseline`)
             # HINT: use `F.mse_loss`
-            baseline_loss = TODO
+            baseline_loss = F.mse_loss(baseline_predictions, targets)
 
             # TODO: optimize `baseline_loss` using `self.baseline_optimizer`
             # HINT: remember to `zero_grad` first
-            TODO
+            self.baseline_optimizer.zero_grad()
+            baseline_loss.backward()
+            self.baseline_optimizer.step()
 
         train_log = {
             'Training Loss': ptu.to_numpy(loss),
