@@ -125,7 +125,7 @@ class RL_Trainer(object):
         # init vars at beginning of training
         self.total_envsteps = 0
         self.start_time = time.time()
-        #print(type(self.agent))
+        print(type(self.agent))
         print("isinstance(self.agent, DQNAgent)", isinstance(self.agent, DQNAgent))
         
         print_period = 1000 if isinstance(self.agent, DQNAgent) else 1
