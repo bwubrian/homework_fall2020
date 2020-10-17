@@ -125,9 +125,11 @@ class RL_Trainer(object):
         # init vars at beginning of training
         self.total_envsteps = 0
         self.start_time = time.time()
-
+        print(type(self.agent))
+        print(isinstance(self.agent, DQNAgent))
+        
         print_period = 1000 if isinstance(self.agent, DQNAgent) else 1
-
+        print(print_period)
         for itr in range(n_iter):
             if itr % print_period == 0:
                 print("\n\n********** Iteration %i ************"%itr)
