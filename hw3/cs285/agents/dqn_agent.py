@@ -46,8 +46,10 @@ class DQNAgent(object):
         # TODO store the latest observation ("frame") into the replay buffer
         # HINT: the replay buffer used here is `MemoryOptimizedReplayBuffer`
             # in dqn_utils.py
-        self.replay_buffer_idx = self.replay_buffer.store_frame(self.last_obs)
         
+        self.replay_buffer_idx = self.replay_buffer.store_frame(self.last_obs)
+
+        print("self.replay_buffer_idx", self.replay_buffer_idx)
         eps = self.exploration.value(self.t)
 
         #print("self.num_actions", self.num_actions)
@@ -93,8 +95,9 @@ class DQNAgent(object):
     def train(self, ob_no, ac_na, re_n, next_ob_no, terminal_n):
         log = {}
         print("train", self.t, self.learning_starts)
-        print(self.t % self.learning_freq)
-        print(self.replay_buffer.can_sample(self.batch_size))
+        #print(self.t % self.learning_freq)
+        
+        print(self.batch_size, self.replay_buffer.num_in_buffer)
         print("===")
         
         if (self.t > self.learning_starts
