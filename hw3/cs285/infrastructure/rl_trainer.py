@@ -145,8 +145,10 @@ class RL_Trainer(object):
                 self.logmetrics = True
             else:
                 self.logmetrics = False
+            print("in run_training_loop")
             # collect trajectories, to be used for training
             if isinstance(self.agent, DQNAgent):
+                print("self.agent is DQNAgent")
                 # only perform an env step and add to replay buffer for DQN
                 self.agent.step_env()
                 envsteps_this_batch = 1
