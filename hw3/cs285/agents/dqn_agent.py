@@ -50,7 +50,7 @@ class DQNAgent(object):
         
         eps = self.exploration.value(self.t)
 
-        print("self.num_actions", self.num_actions)
+        #print("self.num_actions", self.num_actions)
 
         # TODO use epsilon greedy exploration when selecting action
         rand = np.random.random()
