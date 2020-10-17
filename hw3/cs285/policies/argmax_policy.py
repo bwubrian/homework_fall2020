@@ -17,6 +17,7 @@ class ArgMaxPolicy(object):
         qa_values = self.critic.qa_values(observation)
         print("qa_values.shape", qa_values.shape)
         print(type(qa_values))
+        print(qa_values)
         action = np.argmax(qa_values)
         print(action)
         return action.squeeze()
