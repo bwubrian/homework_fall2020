@@ -18,7 +18,7 @@ class ArgMaxPolicy(object):
         print("qa_values.shape", qa_values.shape)
         print(type(qa_values))
         print(qa_values)
-        action = np.array([np.argmax(qa_values)])
+        action = np.array([[np.argmax(qa_values)]])
         print(action)
         squeezed = action.squeeze()
         print(squeezed)
