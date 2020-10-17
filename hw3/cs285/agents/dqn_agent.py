@@ -49,7 +49,7 @@ class DQNAgent(object):
         
         self.replay_buffer_idx = self.replay_buffer.store_frame(self.last_obs)
 
-        print("self.replay_buffer_idx", self.replay_buffer_idx)
+        #print("self.replay_buffer_idx", self.replay_buffer_idx)
         eps = self.exploration.value(self.t)
 
         #print("self.num_actions", self.num_actions)
@@ -62,13 +62,16 @@ class DQNAgent(object):
                 # with probability eps (see np.random.random())
                 # OR if your current step number (see self.t) is less that self.learning_starts
             action = np.random.randint(low=0, high=self.num_actions)
+            print("random action", action)
         else:
             # HINT: Your actor will take in multiple previous observations ("frames") in order
                 # to deal with the partial observability of the environment. Get the most recent 
                 # `frame_history_len` observations using functionality from the replay buffer,
                 # and then use those observations as input to your actor. 
             observations = self.replay_buffer.encode_recent_observation()
-            action = self.actor.get_action(observations)
+            action = self.actor.get_action(observations).squeeze()
+            print("chosen action", action)
+            
         
         # TODO take a step in the environment using the action from the policy
         # HINT1: remember that self.last_obs must always point to the newest/latest observation

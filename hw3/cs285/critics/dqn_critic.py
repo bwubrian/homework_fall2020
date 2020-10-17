@@ -66,8 +66,8 @@ class DQNCritic(BaseCritic):
         q_t_values = torch.gather(qa_t_values, 1, ac_na.unsqueeze(1)).squeeze(1)
         
 
-        print("qa_t_values.shape", qa_t_values.shape)
-        print("q_t_values.shape", q_t_values.shape)
+        #print("qa_t_values.shape", qa_t_values.shape)
+        #print("q_t_values.shape", q_t_values.shape)
         # TODO compute the Q-values from the target network 
         qa_tp1_values = self.q_net_target(ob_no)
 
@@ -87,7 +87,7 @@ class DQNCritic(BaseCritic):
         target = reward_n + self.gamma * q_tp1 * (1 - terminal_n)
         target = target.detach()
 
-        print("target.shape", target.shape)
+        #print("target.shape", target.shape)
         assert q_t_values.shape == target.shape
         loss = self.loss(q_t_values, target)
 
