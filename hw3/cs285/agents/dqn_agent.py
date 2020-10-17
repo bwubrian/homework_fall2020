@@ -92,6 +92,11 @@ class DQNAgent(object):
 
     def train(self, ob_no, ac_na, re_n, next_ob_no, terminal_n):
         log = {}
+        print("train", self.t, self.learning_starts)
+        print(self.t % self.learning_freq)
+        print(self.replay_buffer.can_sample(self.batch_size))
+        print("===")
+        
         if (self.t > self.learning_starts
                 and self.t % self.learning_freq == 0
                 and self.replay_buffer.can_sample(self.batch_size)
