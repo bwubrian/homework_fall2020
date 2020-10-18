@@ -65,19 +65,19 @@ class DQNCritic(BaseCritic):
         qa_t_values = self.q_net(ob_no)
         q_t_values = torch.gather(qa_t_values, 1, ac_na.unsqueeze(1)).squeeze(1)
         
-        print("ac_na.shape", ac_na.shape)
-        print("ac_na", ac_na)
+        # print("ac_na.shape", ac_na.shape)
+        # print("ac_na", ac_na)
 
-        print("qa_t_values.shape", qa_t_values.shape)
-        print("qa_t_values", qa_t_values)
+        # print("qa_t_values.shape", qa_t_values.shape)
+        # print("qa_t_values", qa_t_values)
 
-        print("q_t_values.shape", q_t_values.shape)
-        print("q_t_values", q_t_values)
+        # print("q_t_values.shape", q_t_values.shape)
+        # print("q_t_values", q_t_values)
         # TODO compute the Q-values from the target network 
         qa_tp1_values = self.q_net_target(next_ob_no)
 
-        print("qa_tp1_values.shape", qa_tp1_values.shape)
-        print("qa_tp1_values", qa_tp1_values)
+        # print("qa_tp1_values.shape", qa_tp1_values.shape)
+        # print("qa_tp1_values", qa_tp1_values)
 
         if self.double_q:
             # You must fill this part for Q2 of the Q-learning portion of the homework.
@@ -86,16 +86,17 @@ class DQNCritic(BaseCritic):
             # target Q-network. See page 5 of https://arxiv.org/pdf/1509.06461.pdf for more details.
             #TODO
             next_qs = self.q_net(next_ob_no)
-            print("next_qs.shape", next_qs.shape)
-            print("next_qs", next_qs)
+            # print("next_qs.shape", next_qs.shape)
+            # print("next_qs", next_qs)
             best_q_actions = torch.argmax(next_qs, dim=1)
-            print("best_q_actions.shape", best_q_actions.shape)
-            print("best_q_actions", best_q_actions)
+            # print("best_q_actions.shape", best_q_actions.shape)
+            # print("best_q_actions", best_q_actions)
             qq_t_values = torch.gather(qa_tp1_values, 1, best_q_actions.unsqueeze(1)).squeeze(1)
-            print("qq_t_values.shape", qq_t_values.shape)
-            print("qq_t_values", qq_t_values)
-            print()
+            # print("qq_t_values.shape", qq_t_values.shape)
+            # print("qq_t_values", qq_t_values)
+            # print()
             #qa_tp1_values
+            q_tp1 = qq_t_values
             
         else:
             q_tp1, _ = qa_tp1_values.max(dim=1)
