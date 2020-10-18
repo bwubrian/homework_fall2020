@@ -20,7 +20,12 @@ class ArgMaxPolicy(object):
         #print("qa_values.shape", qa_values.shape)
         #print(type(qa_values))
         #print(qa_values)
+        print(type(qa_values))
+        print(qa_values)
+        print(qa_values.shape)
+
         action = np.array([np.argmax(qa_values)])
+        
         print(action)
         #print(action)
         #squeezed = action.squeeze()
