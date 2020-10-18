@@ -67,11 +67,17 @@ class DQNCritic(BaseCritic):
         
         print("ac_na.shape", ac_na.shape)
         print("ac_na", ac_na)
+
         print("qa_t_values.shape", qa_t_values.shape)
         print("qa_t_values", qa_t_values)
+
         print("q_t_values.shape", q_t_values.shape)
+        print("q_t_values", q_t_values)
         # TODO compute the Q-values from the target network 
         qa_tp1_values = self.q_net_target(next_ob_no)
+
+        print("qa_tp1_values.shape", qa_tp1_values.shape)
+        print("qa_tp1_values", qa_tp1_values)
 
         if self.double_q:
             # You must fill this part for Q2 of the Q-learning portion of the homework.
@@ -82,9 +88,15 @@ class DQNCritic(BaseCritic):
             next_qs = self.q_net(next_ob_no)
             print("next_qs.shape", next_qs.shape)
             print("next_qs", next_qs)
+            best_q_actions = torch.argmax(next_qs)
+            print("best_q_actions.shape", best_q_actions.shape)
+            print("best_q_actions", best_q_actions)
+            qq_t_values = torch.gather(qa_tp1_values, 1, best_q_actions.unsqueeze(1)).squeeze(1)
+            print("qq_t_values.shape", qq_t_values.shape)
+            print("qq_t_values", qq_t_values)
             print()
             #qa_tp1_values
-            pass
+            
         else:
             q_tp1, _ = qa_tp1_values.max(dim=1)
 
