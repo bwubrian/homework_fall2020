@@ -65,7 +65,6 @@ class DQNCritic(BaseCritic):
         qa_t_values = self.q_net(ob_no)
         q_t_values = torch.gather(qa_t_values, 1, ac_na.unsqueeze(1)).squeeze(1)
         
-
         #print("qa_t_values.shape", qa_t_values.shape)
         #print("q_t_values.shape", q_t_values.shape)
         # TODO compute the Q-values from the target network 
