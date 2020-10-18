@@ -70,8 +70,8 @@ class DQNAgent(object):
                 # and then use those observations as input to your actor. 
             observations = self.replay_buffer.encode_recent_observation()
             action = self.actor.get_action(observations)
-            print(action)
-            print("chosen action", action)
+            #print(action)
+            #print("chosen action", action)
             
         
         # TODO take a step in the environment using the action from the policy
