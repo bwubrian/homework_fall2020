@@ -11,9 +11,9 @@ class ArgMaxPolicy(object):
             observation = obs
         else:
             observation = obs[None]
-        print(type(obs))
-        print(obs)
-        print(obs.shape)
+        print(type(observation))
+        print(observation)
+        print(observation.shape)
         ## TODO return the action that maxinmizes the Q-value 
         # at the current observation as the output
         qa_values = self.critic.qa_values(observation)
