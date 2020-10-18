@@ -65,8 +65,11 @@ class DQNCritic(BaseCritic):
         qa_t_values = self.q_net(ob_no)
         q_t_values = torch.gather(qa_t_values, 1, ac_na.unsqueeze(1)).squeeze(1)
         
-        #print("qa_t_values.shape", qa_t_values.shape)
-        #print("q_t_values.shape", q_t_values.shape)
+        print("ac_na.shape", ac_na.shape)
+        print("ac_na", ac_na)
+        print("qa_t_values.shape", qa_t_values.shape)
+        print("qa_t_values", qa_t_values)
+        print("q_t_values.shape", q_t_values.shape)
         # TODO compute the Q-values from the target network 
         qa_tp1_values = self.q_net_target(next_ob_no)
 
@@ -77,6 +80,9 @@ class DQNCritic(BaseCritic):
             # target Q-network. See page 5 of https://arxiv.org/pdf/1509.06461.pdf for more details.
             #TODO
             next_qs = self.q_net(next_ob_no)
+            print("next_qs.shape", next_qs.shape)
+            print("next_qs", next_qs)
+            print()
             #qa_tp1_values
             pass
         else:
