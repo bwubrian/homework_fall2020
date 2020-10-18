@@ -22,4 +22,4 @@ class ArgMaxPolicy(object):
         #print(action)
         #squeezed = action.squeeze()
         #print(squeezed)
-        return action
+        return action.squeeze()
