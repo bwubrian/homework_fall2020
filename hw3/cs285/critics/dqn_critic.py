@@ -77,7 +77,7 @@ class DQNCritic(BaseCritic):
             # is being updated, but the Q-value for this action is obtained from the
             # target Q-network. See page 5 of https://arxiv.org/pdf/1509.06461.pdf for more details.
             #TODO
-
+            
             pass
         else:
             q_tp1, _ = qa_tp1_values.max(dim=1)
