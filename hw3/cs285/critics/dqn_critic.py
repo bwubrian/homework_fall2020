@@ -88,7 +88,7 @@ class DQNCritic(BaseCritic):
             next_qs = self.q_net(next_ob_no)
             print("next_qs.shape", next_qs.shape)
             print("next_qs", next_qs)
-            best_q_actions = torch.argmax(next_qs)
+            best_q_actions = torch.argmax(next_qs, dim=1)
             print("best_q_actions.shape", best_q_actions.shape)
             print("best_q_actions", best_q_actions)
             qq_t_values = torch.gather(qa_tp1_values, 1, best_q_actions.unsqueeze(1)).squeeze(1)
