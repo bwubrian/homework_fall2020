@@ -69,7 +69,7 @@ class DQNCritic(BaseCritic):
         #print("qa_t_values.shape", qa_t_values.shape)
         #print("q_t_values.shape", q_t_values.shape)
         # TODO compute the Q-values from the target network 
-        qa_tp1_values = self.q_net_target(ob_no)
+        qa_tp1_values = self.q_net_target(next_ob_no)
 
         if self.double_q:
             # You must fill this part for Q2 of the Q-learning portion of the homework.
@@ -77,6 +77,7 @@ class DQNCritic(BaseCritic):
             # is being updated, but the Q-value for this action is obtained from the
             # target Q-network. See page 5 of https://arxiv.org/pdf/1509.06461.pdf for more details.
             #TODO
+
             pass
         else:
             q_tp1, _ = qa_tp1_values.max(dim=1)

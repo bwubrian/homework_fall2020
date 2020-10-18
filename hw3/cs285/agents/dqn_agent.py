@@ -69,8 +69,8 @@ class DQNAgent(object):
                 # `frame_history_len` observations using functionality from the replay buffer,
                 # and then use those observations as input to your actor. 
             observations = self.replay_buffer.encode_recent_observation()
-            action = self.actor.get_action(observations).squeeze()
-            print(observations)
+            action = self.actor.get_action(observations)
+            print(action)
             print("chosen action", action)
             
         
