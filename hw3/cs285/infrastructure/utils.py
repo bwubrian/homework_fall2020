@@ -74,7 +74,7 @@ def sample_trajectory(env, policy, max_path_length, render=False, render_mode=('
                 time.sleep(env.model.opt.timestep)
         obs.append(ob)
         ac = policy.get_action(ob)
-        print("ac", ac)
+        #print("ac", ac)
         ac = ac[0]
         acs.append(ac)
         ob, rew, done, _ = env.step(ac)
