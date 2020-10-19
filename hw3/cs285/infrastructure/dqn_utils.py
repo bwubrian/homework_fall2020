@@ -65,7 +65,7 @@ def get_env_kwargs(env_name):
             'gamma': 1.00,
             'learning_starts': 1000,
             'learning_freq': 1,
-            'frame_history_len': 8,
+            'frame_history_len': 1,
             'target_update_freq': 3000,
             'grad_norm_clipping': 10,
             'lander': True,
@@ -164,7 +164,7 @@ def lander_optimizer():
         optim_kwargs=dict(
             lr=1,
         ),
-        learning_rate_schedule=lambda epoch: 1e-3,  # keep init learning rate 1e-3,
+        learning_rate_schedule=lambda epoch: 1e-4,  # keep init learning rate 1e-3,
     )
 
 
