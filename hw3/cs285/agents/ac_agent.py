@@ -51,7 +51,7 @@ class ACAgent(BaseAgent):
 
         loss = OrderedDict()
         loss['Critic_Loss'] = critic_loss
-        loss['Actor_Loss'] = TODO
+        loss['Actor_Loss'] = actor_loss
 
         return loss
 
