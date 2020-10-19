@@ -65,7 +65,7 @@ def get_env_kwargs(env_name):
             'gamma': 1.00,
             'learning_starts': 1000,
             'learning_freq': 1,
-            'frame_history_len': 4,
+            'frame_history_len': 8,
             'target_update_freq': 3000,
             'grad_norm_clipping': 10,
             'lander': True,
