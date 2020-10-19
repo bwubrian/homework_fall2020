@@ -91,11 +91,11 @@ class BootstrappedContinuousCritic(nn.Module, BaseCritic):
         terminal_n = ptu.from_numpy(terminal_n)
         for step in range(self.num_grad_steps_per_target_update * self.num_target_updates):
             if step % self.num_grad_steps_per_target_update == 0:
-                V_s_prime = self.critic_network(next_ob_no).squeeze()
+                V_s_prime = self(next_ob_no).squeeze()
                 #V_s_prime = ptu.to_numpy(V_s_prime)
                 target = reward_n + self.gamma * V_s_prime * (1 - terminal_n)
-                target = target.detach()
-            loss = self.loss(self.critic_network(ob_no), target)
+            target = target.detach()
+            loss = self.loss(self(ob_no), target)
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()

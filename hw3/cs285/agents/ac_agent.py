@@ -41,7 +41,7 @@ class ACAgent(BaseAgent):
         #     update the actor
         critic_loss = 0
         for i in range(self.agent_params['num_critic_updates_per_agent_update']):
-            critic_loss += self.critic.update(ob_no, ac_na, next_ob_no, re_n, terminal_n)
+            critic_loss = self.critic.update(ob_no, ac_na, next_ob_no, re_n, terminal_n)
 
         adv_n = self.estimate_advantage(ob_no, next_ob_no, re_n, terminal_n)
 
