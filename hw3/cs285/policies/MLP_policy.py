@@ -126,9 +126,68 @@ class MLPPolicy(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
 #####################################################
 #####################################################
 
+# what was there at first:
+# class MLPPolicyAC(MLPPolicy):
+#     def update(self, observations, actions, adv_n=None):
+#         # TODO: update the policy and return the loss
+#         loss = TODO
+#         return loss.item()
+
 
 class MLPPolicyAC(MLPPolicy):
-    def update(self, observations, actions, adv_n=None):
+    # def __init__(self, ac_dim, ob_dim, n_layers, size, **kwargs):
+
+    #     super().__init__(ac_dim, ob_dim, n_layers, size, **kwargs)
+    #     self.baseline_loss = nn.MSELoss()
+
+    def update(self, observations, actions, adv_n):
         # TODO: update the policy and return the loss
-        loss = TODO
+        observations = ptu.from_numpy(observations)
+        actions = ptu.from_numpy(actions)
+        advantages = ptu.from_numpy(adv_n)
+
+        # TODO: compute the loss that should be optimized when training with policy gradient
+        # HINT1: Recall that the expression that we want to MAXIMIZE
+            # is the expectation over collected trajectories of:
+            # sum_{t=0}^{T-1} [grad [log pi(a_t|s_t) * (Q_t - b_t)]]
+        # HINT2: you will want to use the `log_prob` method on the distribution returned
+            # by the `forward` method
+        # HINT3: don't forget that `optimizer.step()` MINIMIZES a loss
+
+
+        action_distribution = self(observations)
+        # print("action_distribution:")
+        # print(action_distribution)
+        # print("="*10)  
+
+        #predicted_actions = action_distribution.sample()
+
+        # print("predicted_actions:")
+        # print(predicted_actions.shape)
+        # print(predicted_actions)
+        # print(max(predicted_actions))
+        # print("="*10)  
+
+        logprobs = action_distribution.log_prob(actions)
+        # print("logprobs:")
+        # print(logprobs.shape)
+        # print(logprobs)
+        # print("="*10)  
+
+        product_list = torch.mul(logprobs, advantages)
+        # print("product_list:")
+        # print(product_list.shape)
+        # print(product_list)
+        # print("="*10)  
+        loss = -torch.sum(product_list)
+
+        # TODO: optimize `loss` using `self.optimizer`
+        # HINT: remember to `zero_grad` first
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+
+        # train_log = {
+        #     'Training Loss': ptu.to_numpy(loss),
+        # }
         return loss.item()
