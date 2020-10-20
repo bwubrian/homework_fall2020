@@ -164,7 +164,7 @@ def lander_optimizer():
         optim_kwargs=dict(
             lr=1,
         ),
-        learning_rate_schedule=lambda epoch: 1e-4,  # keep init learning rate 1e-3,
+        learning_rate_schedule=lambda epoch: 1e-5,  # keep init learning rate 1e-3,
     )
 
 
