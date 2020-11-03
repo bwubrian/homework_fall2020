@@ -163,6 +163,8 @@ class FFModel(nn.Module, BaseModel):
                                 ptu.from_numpy(data_statistics['delta_mean']), 
                                 ptu.from_numpy(data_statistics['delta_std'])
           )[1]
+        print("delta_pred_normalized", delta_pred_normalized)
+        print("target", target)
         loss = self.loss(delta_pred_normalized, target)   # TODO(Q1) compute the loss
         # Hint: `self(...)` returns a tuple, but you only need to use one of the
         # outputs.
