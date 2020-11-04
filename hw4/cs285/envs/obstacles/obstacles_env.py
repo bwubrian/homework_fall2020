@@ -142,6 +142,8 @@ class Obstacles(gym.Env):
         action = action / 10. #scale (-1,1) to (-0.1, 0.1)
 
         # move, only if its a valid move (else, keep it there because it cant move)
+        print("self.current", repr(self.current))
+        print("action", repr(action))
         temp = self.current + action
         if self.is_valid(temp[None, :]):
             self.current = temp
