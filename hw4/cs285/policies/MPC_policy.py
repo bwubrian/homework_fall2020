@@ -88,17 +88,38 @@ class MPCPolicy(BasePolicy):
         # Hint: Remember that the model can process observations and actions
         #       in batch, which can be much faster than looping through each
         #       action sequence.
-        for candidate_action_sequence in candidate_action_sequences:
-            action_sequence_rewards = 0
-            last_obs = obs
-            print("candidate_action_sequence", candidate_action_sequence)
+
+        # for candidate_action_sequence in candidate_action_sequences:
+        #     action_sequence_rewards = 0
+        #     last_obs = obs
+        #     print("candidate_action_sequence", candidate_action_sequence)
             
-            for candidate_action in candidate_action_sequence:
-                print("last_obs", last_obs)
-                print("candidate_action", candidate_action)
-                predicted_obs = model.get_prediction(last_obs, candidate_action, self.data_statistics)
-                rewards = self.env.get_reward(last_obs, candidate_action)
-                action_sequence_rewards += rewards
-                last_obs = predicted_obs
-            sum_of_rewards.append(action_sequence_rewards)
+        #     for candidate_action in candidate_action_sequence:
+        #         print("last_obs", last_obs)
+        #         print("candidate_action", candidate_action)
+        #         predicted_obs = model.get_prediction(last_obs, candidate_action, self.data_statistics)
+        #         rewards = self.env.get_reward(last_obs, candidate_action)
+        #         action_sequence_rewards += rewards
+        #         last_obs = predicted_obs
+        #     sum_of_rewards.append(action_sequence_rewards)
+        # return np.array(sum_of_rewards)
+
+        print("obs", obs)
+        print("candidate_action_sequences", candidate_action_sequences)
+
+        sum_of_rewards = []
+        last_obs = np.tile(obs, (self.N, 1))
+
+        print("last_obs", last_obs)
+        
+
+        for i in range(self.horizon):
+            predicted_obs = model.get_prediction(last_obs, candidate_action_sequences[:,i,:], self.data_statistics)
+            rewards = self.env.get_reward(last_obs, candidate_action_sequences[:,i,:])
+
+            print("predicted_obs", predicted_obs)
+
+            sum_of_rewards.append(rewards)
+            last_obs = predicted_obs
         return np.array(sum_of_rewards)
+
