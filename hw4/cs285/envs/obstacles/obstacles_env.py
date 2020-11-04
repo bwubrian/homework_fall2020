@@ -145,6 +145,7 @@ class Obstacles(gym.Env):
         print("self.current", repr(self.current))
         print("action", repr(action))
         temp = self.current + action
+        print("temp", repr(temp))
         if self.is_valid(temp[None, :]):
             self.current = temp
 
