@@ -91,7 +91,11 @@ class MPCPolicy(BasePolicy):
         for candidate_action_sequence in candidate_action_sequences:
             action_sequence_rewards = 0
             last_obs = obs
+            print("candidate_action_sequence", candidate_action_sequence)
+            
             for candidate_action in candidate_action_sequence:
+                print("last_obs", last_obs)
+                print("candidate_action", candidate_action)
                 predicted_obs = model.get_prediction(last_obs, candidate_action, self.data_statistics)
                 rewards = self.env.get_reward(last_obs, candidate_action)
                 action_sequence_rewards += rewards
