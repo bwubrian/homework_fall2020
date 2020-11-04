@@ -47,8 +47,6 @@ class MPCPolicy(BasePolicy):
         candidate_action_sequences = self.sample_action_sequences(
             num_sequences=self.N, horizon=self.horizon)
 
-
-        print("self.N", self.N)
         # for each model in ensemble:
         predicted_sum_of_rewards_per_model = []
         for model in self.dyn_models:
@@ -56,20 +54,14 @@ class MPCPolicy(BasePolicy):
                 obs, candidate_action_sequences, model)
             predicted_sum_of_rewards_per_model.append(sum_of_rewards)
 
-    
         # calculate mean_across_ensembles(predicted rewards)
         predicted_rewards = np.mean(
             predicted_sum_of_rewards_per_model, axis=0)  # [ens, N] --> N
-
-        print("predicted_rewards.shape", predicted_rewards.shape)
 
         # pick the action sequence and return the 1st element of that sequence
         best_action_sequence = candidate_action_sequences[np.argmax(predicted_rewards)]  # TODO (Q2)
         action_to_take = best_action_sequence[0]  # TODO (Q2)
         unsqueezed_action = action_to_take[None]  # Unsqueeze the first index
-        print("best_action_sequence.shape", best_action_sequence.shape)
-        print("action_to_take.shape", action_to_take.shape)
-        print("unsqueezed_action.shape", unsqueezed_action.shape)
         return unsqueezed_action
 
     def calculate_sum_of_rewards(self, obs, candidate_action_sequences, model):
@@ -113,19 +105,14 @@ class MPCPolicy(BasePolicy):
         #     sum_of_rewards.append(action_sequence_rewards)
         # return np.array(sum_of_rewards)
 
-        print("obs", obs)
-        print("candidate_action_sequences.shape", candidate_action_sequences.shape)
-
         sum_of_rewards = np.zeros(self.N)
         last_obs = np.tile(obs, (self.N, 1))
 
         for i in range(self.horizon):
-            print("last_obs.shape", last_obs.shape)
-            print("candidate_action_sequences[:,i,:].shape", candidate_action_sequences[:,i,:].shape)
+
             predicted_obs = model.get_prediction(last_obs, candidate_action_sequences[:,i,:], self.data_statistics)
             rewards = self.env.get_reward(last_obs, candidate_action_sequences[:,i,:])[0]
-            print("rewards.shape", rewards.shape)
-            print("predicted_obs.shape", predicted_obs.shape)
+
             sum_of_rewards += rewards
             last_obs = predicted_obs
         return sum_of_rewards
