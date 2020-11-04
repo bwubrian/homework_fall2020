@@ -65,7 +65,7 @@ class MPCPolicy(BasePolicy):
 
         # pick the action sequence and return the 1st element of that sequence
         best_action_sequence = candidate_action_sequences[np.argmax(predicted_rewards)]  # TODO (Q2)
-        action_to_take = candidate_action_sequences[0]  # TODO (Q2)
+        action_to_take = best_action_sequence[0]  # TODO (Q2)
         unsqueezed_action = action_to_take[None]  # Unsqueeze the first index
         print("best_action_sequence.shape", best_action_sequence.shape)
         print("action_to_take.shape", action_to_take.shape)
