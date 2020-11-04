@@ -56,8 +56,7 @@ class MPCPolicy(BasePolicy):
                 obs, candidate_action_sequences, model)
             predicted_sum_of_rewards_per_model.append(sum_of_rewards)
 
-        
-
+    
         # calculate mean_across_ensembles(predicted rewards)
         predicted_rewards = np.mean(
             predicted_sum_of_rewards_per_model, axis=0)  # [ens, N] --> N
@@ -67,7 +66,11 @@ class MPCPolicy(BasePolicy):
         # pick the action sequence and return the 1st element of that sequence
         best_action_sequence = candidate_action_sequences[np.argmax(predicted_rewards)]  # TODO (Q2)
         action_to_take = candidate_action_sequences[0]  # TODO (Q2)
-        return action_to_take[None]  # Unsqueeze the first index
+        unsqueezed_action = action_to_take[None]  # Unsqueeze the first index
+        print("best_action_sequence.shape", best_action_sequence.shape)
+        print("action_to_take.shape", action_to_take.shape)
+        print("unsqueezed_action.shape", unsqueezed_action.shape)
+        return unsqueezed_action
 
     def calculate_sum_of_rewards(self, obs, candidate_action_sequences, model):
         """
