@@ -47,6 +47,8 @@ class MPCPolicy(BasePolicy):
         candidate_action_sequences = self.sample_action_sequences(
             num_sequences=self.N, horizon=self.horizon)
 
+
+        print("self.N", self.N)
         # for each model in ensemble:
         predicted_sum_of_rewards_per_model = []
         for model in self.dyn_models:
@@ -54,7 +56,7 @@ class MPCPolicy(BasePolicy):
                 obs, candidate_action_sequences, model)
             predicted_sum_of_rewards_per_model.append(sum_of_rewards)
 
-        print("self.N", self.N)
+        
 
         # calculate mean_across_ensembles(predicted rewards)
         predicted_rewards = np.mean(
@@ -116,8 +118,10 @@ class MPCPolicy(BasePolicy):
 
         for i in range(self.horizon):
             print("last_obs.shape", last_obs.shape)
+            print("candidate_action_sequences[:,i,:].shape", candidate_action_sequences[:,i,:].shape)
             predicted_obs = model.get_prediction(last_obs, candidate_action_sequences[:,i,:], self.data_statistics)
             rewards = self.env.get_reward(last_obs, candidate_action_sequences[:,i,:])
+            print("rewards.shape", rewards.shape)
             print("predicted_obs.shape", predicted_obs.shape)
             sum_of_rewards += rewards
             last_obs = predicted_obs
