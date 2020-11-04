@@ -82,16 +82,13 @@ class FFModel(nn.Module, BaseModel):
         acs_normalized = normalize(acs_unnormalized, acs_mean, acs_std) # TODO(Q1)
 
         # predicted change in obs
-        #print("obs_normalized", obs_normalized)
-        print("acs_normalized", acs_normalized)
-        print("acs_normalized.shape", acs_normalized.shape)
         concatenated_input = torch.cat([obs_normalized, acs_normalized], dim=1)
 
         # TODO(Q1) compute delta_pred_normalized and next_obs_pred
         # Hint: as described in the PDF, the output of the network is the
         # *normalized change* in state, i.e. normalized(s_t+1 - s_t).
         delta_pred_normalized = self.delta_network(concatenated_input) # TODO(Q1)
-        next_obs_pred = obs_unnormalized + unnormalize(delta_pred_normalized, obs_mean, obs_std) # TODO(Q1)
+        next_obs_pred = obs_unnormalized + unnormalize(delta_pred_normalized, delta_mean, delta_std) # TODO(Q1)
         return next_obs_pred, delta_pred_normalized
 
     def get_prediction(self, obs, acs, data_statistics):
@@ -108,17 +105,6 @@ class FFModel(nn.Module, BaseModel):
              - 'delta_std'
         :return: a numpy array of the predicted next-states (s_t+1)
         """
-        
-        # prediction = self.forward(
-        #                         obs, 
-        #                         acs, 
-        #                         data_statistics['obs_mean'], 
-        #                         data_statistics['obs_std'],
-        #                         data_statistics['acs_mean'], 
-        #                         data_statistics['acs_std'],
-        #                         data_statistics['delta_mean'], 
-        #                         data_statistics['delta_std']
-        #   )[0]
         prediction = self.forward(
                                 ptu.from_numpy(obs), 
                                 ptu.from_numpy(acs), 
@@ -170,7 +156,6 @@ class FFModel(nn.Module, BaseModel):
         loss = self.loss(delta_pred_normalized, target)   # TODO(Q1) compute the loss
         # Hint: `self(...)` returns a tuple, but you only need to use one of the
         # outputs.
-
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
