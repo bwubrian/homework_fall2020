@@ -76,6 +76,8 @@ def sample_trajectory(env, policy, max_path_length, render=False, render_mode=('
         ac = policy.get_action(ob)
         ac = ac[0]
         acs.append(ac)
+        print("ac.shape", ac.shape)
+        print("ac", ac)
         ob, rew, done, _ = env.step(ac)
         # add the observation after taking a step to next_obs
         next_obs.append(ob)

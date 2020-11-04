@@ -82,8 +82,9 @@ class FFModel(nn.Module, BaseModel):
         acs_normalized = normalize(acs_unnormalized, acs_mean, acs_std) # TODO(Q1)
 
         # predicted change in obs
-        print("obs_normalized", obs_normalized)
+        #print("obs_normalized", obs_normalized)
         print("acs_normalized", acs_normalized)
+        print("acs_normalized.shape", acs_normalized.shape)
         concatenated_input = torch.cat([obs_normalized, acs_normalized], dim=1)
 
         # TODO(Q1) compute delta_pred_normalized and next_obs_pred
