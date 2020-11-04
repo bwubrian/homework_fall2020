@@ -59,8 +59,8 @@ class MPCPolicy(BasePolicy):
             predicted_sum_of_rewards_per_model, axis=0)  # [ens, N] --> N
 
         # pick the action sequence and return the 1st element of that sequence
-        best_action_sequence = None  # TODO (Q2)
-        action_to_take = None  # TODO (Q2)
+        best_action_sequence = candidate_action_sequences[np.argmax(predicted_rewards)]  # TODO (Q2)
+        action_to_take = candidate_action_sequences[0]  # TODO (Q2)
         return action_to_take[None]  # Unsqueeze the first index
 
     def calculate_sum_of_rewards(self, obs, candidate_action_sequences, model):
@@ -76,7 +76,7 @@ class MPCPolicy(BasePolicy):
         :return: numpy array with the sum of rewards for each action sequence.
         The array should have shape [N].
         """
-        sum_of_rewards = None  # TODO (Q2)
+        sum_of_rewards = []  # TODO (Q2)
         # For each candidate action sequence, predict a sequence of
         # states for each dynamics model in your ensemble.
         # Once you have a sequence of predicted states from each model in
@@ -88,4 +88,13 @@ class MPCPolicy(BasePolicy):
         # Hint: Remember that the model can process observations and actions
         #       in batch, which can be much faster than looping through each
         #       action sequence.
-        return sum_of_rewards
+        for candidate_action_sequence in candidate_action_sequences:
+            action_sequence_rewards = 0
+            last_obs = obs
+            for candidate_action in candidate_action_sequence:
+                predicted_obs = model.get_prediction(last_obs, candidate_action, self.data_statistics)
+                rewards = self.env.get_reward(last_obs, candidate_action)
+                action_sequence_rewards += rewards
+                last_obs = predicted_obs
+            sum_of_rewards.append(action_sequence_rewards)
+        return np.array(sum_of_rewards)
