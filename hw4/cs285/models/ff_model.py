@@ -82,6 +82,8 @@ class FFModel(nn.Module, BaseModel):
         acs_normalized = normalize(acs_unnormalized, acs_mean, acs_std) # TODO(Q1)
 
         # predicted change in obs
+        print("obs_normalized", obs_normalized)
+        print("acs_normalized", acs_normalized)
         concatenated_input = torch.cat([obs_normalized, acs_normalized], dim=1)
 
         # TODO(Q1) compute delta_pred_normalized and next_obs_pred
@@ -152,8 +154,6 @@ class FFModel(nn.Module, BaseModel):
         # Hint: you should use `data_statistics['delta_mean']` and
         # `data_statistics['delta_std']`, which keep track of the mean
         # and standard deviation of the model.
-        
-
         delta_pred_normalized = self.forward(
                                 ptu.from_numpy(observations), 
                                 ptu.from_numpy(actions), 
