@@ -120,7 +120,7 @@ class MPCPolicy(BasePolicy):
             print("last_obs.shape", last_obs.shape)
             print("candidate_action_sequences[:,i,:].shape", candidate_action_sequences[:,i,:].shape)
             predicted_obs = model.get_prediction(last_obs, candidate_action_sequences[:,i,:], self.data_statistics)
-            rewards = self.env.get_reward(last_obs, candidate_action_sequences[:,i,:])
+            rewards = self.env.get_reward(last_obs, candidate_action_sequences[:,i,:])[0]
             print("rewards.shape", rewards.shape)
             print("predicted_obs.shape", predicted_obs.shape)
             sum_of_rewards += rewards
