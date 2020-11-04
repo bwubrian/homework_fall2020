@@ -54,9 +54,13 @@ class MPCPolicy(BasePolicy):
                 obs, candidate_action_sequences, model)
             predicted_sum_of_rewards_per_model.append(sum_of_rewards)
 
+        print("self.N", self.N)
+
         # calculate mean_across_ensembles(predicted rewards)
         predicted_rewards = np.mean(
             predicted_sum_of_rewards_per_model, axis=0)  # [ens, N] --> N
+
+        print("predicted_rewards.shape", predicted_rewards.shape)
 
         # pick the action sequence and return the 1st element of that sequence
         best_action_sequence = candidate_action_sequences[np.argmax(predicted_rewards)]  # TODO (Q2)
@@ -105,21 +109,17 @@ class MPCPolicy(BasePolicy):
         # return np.array(sum_of_rewards)
 
         print("obs", obs)
-        print("candidate_action_sequences", candidate_action_sequences)
+        print("candidate_action_sequences.shape", candidate_action_sequences.shape)
 
-        sum_of_rewards = []
+        sum_of_rewards = np.zeros((self.N, 1))
         last_obs = np.tile(obs, (self.N, 1))
 
-        print("last_obs", last_obs)
-        
-
         for i in range(self.horizon):
+            print("last_obs.shape", last_obs.shape)
             predicted_obs = model.get_prediction(last_obs, candidate_action_sequences[:,i,:], self.data_statistics)
             rewards = self.env.get_reward(last_obs, candidate_action_sequences[:,i,:])
-
-            print("predicted_obs", predicted_obs)
-
-            sum_of_rewards.append(rewards)
+            print("predicted_obs.shape", predicted_obs.shape)
+            sum_of_rewards += rewards
             last_obs = predicted_obs
-        return np.array(sum_of_rewards)
+        return sum_of_rewards.flatten()
 
