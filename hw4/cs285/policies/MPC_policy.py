@@ -113,7 +113,7 @@ class MPCPolicy(BasePolicy):
         print("obs", obs)
         print("candidate_action_sequences.shape", candidate_action_sequences.shape)
 
-        sum_of_rewards = np.zeros((self.N, 1))
+        sum_of_rewards = np.zeros(self.N)
         last_obs = np.tile(obs, (self.N, 1))
 
         for i in range(self.horizon):
@@ -125,5 +125,5 @@ class MPCPolicy(BasePolicy):
             print("predicted_obs.shape", predicted_obs.shape)
             sum_of_rewards += rewards
             last_obs = predicted_obs
-        return sum_of_rewards.flatten()
+        return sum_of_rewards
 
