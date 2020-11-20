@@ -217,8 +217,29 @@ class RL_Trainer(object):
             envsteps_this_batch: the sum over the numbers of environment steps in paths
             train_video_paths: paths which also contain videos for visualization purposes
         """
-        raise NotImplementedError
         # TODO: get this from hw1 or hw2
+        if itr == 0:
+            if initial_expertdata is not None:
+                paths = pickle.load(open(self.params['expert_data'], 'rb'))
+                return paths, 0, None
+            if save_expert_data_to_disk:
+                num_transitions_to_sample = self.params['batch_size_initial']
+
+        # collect data to be used for training
+        print("\nCollecting data to be used for training...")
+        paths, envsteps_this_batch = utils.sample_trajectories(self.env, collect_policy, num_transitions_to_sample, self.params['ep_len'])
+
+        # collect more rollouts with the same policy, to be saved as videos in tensorboard
+        train_video_paths = None
+        if self.logvideo:
+            print('\nCollecting train rollouts to be used for saving videos...')
+            train_video_paths = utils.sample_n_trajectories(self.env, collect_policy, MAX_NVIDEO, MAX_VIDEO_LEN, True)
+
+        if save_expert_data_to_disk and itr == 0:
+            with open('expert_data_{}.pkl'.format(self.params['env_name']), 'wb') as file:
+                pickle.dump(paths, file)
+
+        return paths, envsteps_this_batch, train_video_paths
 
     ####################################
     ####################################
