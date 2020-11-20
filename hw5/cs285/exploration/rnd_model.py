@@ -67,7 +67,8 @@ class RNDModel(nn.Module, BaseExplorationModel):
         rand_output = self.f(ob_no)
         rand_output.detach()
 
-        error =  np.linalg.norm(self.f(ob_no) - rand_output)
+        error =  torch.norm(self.f(ob_no) - rand_output, dim = 1)
+        print("error.shape", error.shape)
         return error
 
     def forward_np(self, ob_no):
