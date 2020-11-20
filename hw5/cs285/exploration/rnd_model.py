@@ -62,7 +62,8 @@ class RNDModel(nn.Module, BaseExplorationModel):
     def forward(self, ob_no):
         # TODO: Get the prediction error for ob_no
         # HINT: Remember to detach the output of self.f!
-
+        print("forward ob_no.shape", ob_no.shape)
+        print("forward ob_no", ob_no)
         rand_output = self.f(ob_no)
         rand_output.detach()
 
@@ -78,7 +79,9 @@ class RNDModel(nn.Module, BaseExplorationModel):
         # TODO: Update f_hat using ob_no
         # Hint: Take the mean prediction error across the batch
         # TODO THE NEXT TIME BRIAN OK
-        loss = torch.mean(forward()ob_no)
+        print("update ob_no.shape", ob_no.shape)
+        print("update ob_no", ob_no)
+        loss = torch.mean(forward(ob_no))
 
         self.optimizer.zero_grad()
         loss.backward()
