@@ -83,6 +83,7 @@ class RNDModel(nn.Module, BaseExplorationModel):
         print("update ob_no.shape", ob_no.shape)
         print("update ob_no", ob_no)
         loss = torch.mean(forward(ob_no))
+        print("loss", loss)
 
         self.optimizer.zero_grad()
         loss.backward()
