@@ -68,7 +68,7 @@ class RNDModel(nn.Module, BaseExplorationModel):
         rand_output.detach()
 
         error =  torch.norm(self.f(ob_no) - rand_output, dim = 1)
-        print("error.shape", error.shape)
+        #print("error.shape", error.shape)
         return error
 
     def forward_np(self, ob_no):
@@ -84,7 +84,7 @@ class RNDModel(nn.Module, BaseExplorationModel):
         # print("update ob_no", ob_no)
         ob_no = ptu.from_numpy(ob_no)
         loss = torch.mean(self.forward(ob_no))
-        print("loss", loss)
+        #print("loss", loss)
 
         self.optimizer.zero_grad()
         loss.backward()
