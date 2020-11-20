@@ -82,7 +82,7 @@ class RNDModel(nn.Module, BaseExplorationModel):
         # TODO THE NEXT TIME BRIAN OK
         print("update ob_no.shape", ob_no.shape)
         print("update ob_no", ob_no)
-        loss = torch.mean(forward(ob_no))
+        loss = torch.mean(self.forward(ob_no))
         print("loss", loss)
 
         self.optimizer.zero_grad()
