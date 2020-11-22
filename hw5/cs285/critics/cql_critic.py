@@ -86,12 +86,10 @@ class CQLCritic(BaseCritic):
         # CQL Implementation
         # TODO: Implement CQL as described in the pdf and paper
         # Hint: After calculating cql_loss, augment the loss appropriately
-        print("qa_t_values.shape", qa_t_values.shape)
-        print("q_t_values.shape", q_t_values.shape)
-        cql_loss = self.cql_alpha * torch.mean(torch.logsumexp(qa_t_values, dim=1) - q_t_values)
-        print("cql_loss", cql_loss)
-        loss = loss - cql_loss
         
+        cql_loss = self.cql_alpha * torch.mean(torch.logsumexp(qa_t_values, dim=1) - q_t_values)
+        loss = loss - cql_loss
+
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
@@ -99,9 +97,9 @@ class CQLCritic(BaseCritic):
         info = {'Training Loss': ptu.to_numpy(loss)}
 
         # TODO: Uncomment these lines after implementing CQL
-        # info['CQL Loss'] = ptu.to_numpy(cql_loss)
-        # info['Data q-values'] = ptu.to_numpy(q_t_values).mean()
-        # info['OOD q-values'] = ptu.to_numpy(q_t_logsumexp).mean()
+        info['CQL Loss'] = ptu.to_numpy(cql_loss)
+        info['Data q-values'] = ptu.to_numpy(q_t_values).mean()
+        info['OOD q-values'] = ptu.to_numpy(q_t_logsumexp).mean()
 
         return info
 
