@@ -88,8 +88,10 @@ class CQLCritic(BaseCritic):
         # Hint: After calculating cql_loss, augment the loss appropriately
         print("qa_t_values.shape", qa_t_values.shape)
         print("q_t_values.shape", q_t_values.shape)
-        #cql_loss = self.cql_alpha *  torch.logsumexp(qa_t_values, dim=1) - q_t_values
-
+        cql_loss = self.cql_alpha * torch.mean(torch.logsumexp(qa_t_values, dim=1) - q_t_values)
+        print("cql_loss", cql_loss)
+        loss = loss - cql_loss
+        
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
