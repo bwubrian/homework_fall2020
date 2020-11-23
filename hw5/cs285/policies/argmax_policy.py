@@ -41,13 +41,13 @@ class ArgMaxPolicy(object):
         exp_q_values = np.exp(q_values)
         exp_sum_q_values = exp_q_values / np.sum(exp_q_values)
         print("exp_sum_q_values", exp_sum_q_values)
-        print("np.sum(exp_q_values", np.sum(exp_q_values))
         exp_sum_q_values = exp_sum_q_values.flatten()
         action = np.random.choice(np.arange(q_values.shape[1]), p=exp_sum_q_values)
+        return action
         #print()
         # action = q_values.argmax(-1)
 
-        return action[0]
+        #return action[0]
 
     ####################################
     ####################################
