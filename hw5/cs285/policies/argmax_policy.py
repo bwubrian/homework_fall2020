@@ -23,7 +23,25 @@ class ArgMaxPolicy(object):
         q_values = self.critic.qa_values(observation)
         action = q_values.argmax(-1)
 
-        return action[0]        
+        return action[0]
+
+    def get_sampled_action(self, obs):
+        # MJ: changed the dimension check to a 3
+        if len(obs.shape) > 3:
+            observation = obs
+        else:
+            observation = obs[None]
+
+        # TODO: get this from hw3
+        ## TODO return the action that maxinmizes the Q-value 
+        # at the current observation as the output
+        q_values = self.critic.qa_values(observation)
+        print("q_values.shape", q_values.shape)
+        #np.random.choice(np.arange())
+        #print()
+        # action = q_values.argmax(-1)
+
+        return action[0]
 
     ####################################
     ####################################
