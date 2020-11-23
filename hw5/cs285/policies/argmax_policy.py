@@ -22,7 +22,7 @@ class ArgMaxPolicy(object):
         # at the current observation as the output
         q_values = self.critic.qa_values(observation)
         action = q_values.argmax(-1)
-        print("q_values.shape", q_values.shape)
+        print("get_action q_values.shape", q_values.shape)
         print("action", repr(action))
         return action[0]
 
@@ -38,11 +38,14 @@ class ArgMaxPolicy(object):
         # at the current observation as the output
         q_values = self.critic.qa_values(observation)
         print("q_values.shape", q_values.shape)
-        #np.random.choice(np.arange())
+        exp_q_values = np.exp(q_values)
+        exp_sum_q_values = exp_q_values / np.sum(exp_q_values)
+        print("exp_sum_q_values", exp_sum_q_values)
+        action = np.random.choice(np.arange(q_values.shape[1]), exp_sum_q_values)
         #print()
         # action = q_values.argmax(-1)
 
-        #return action[0]
+        return action[0]
 
     ####################################
     ####################################
