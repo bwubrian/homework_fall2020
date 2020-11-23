@@ -83,7 +83,8 @@ class RNDModel(nn.Module, BaseExplorationModel):
         # print("update ob_no.shape", ob_no.shape)
         # print("update ob_no", ob_no)
         ob_no = ptu.from_numpy(ob_no)
-        loss = torch.mean(self.forward(ob_no))
+        error = self.forward(ob_no)
+        loss = error.mean()
         #print("loss", loss)
 
         self.optimizer.zero_grad()
