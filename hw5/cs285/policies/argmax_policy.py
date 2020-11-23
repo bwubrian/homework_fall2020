@@ -22,7 +22,8 @@ class ArgMaxPolicy(object):
         # at the current observation as the output
         q_values = self.critic.qa_values(observation)
         action = q_values.argmax(-1)
-
+        print("q_values.shape", q_values.shape)
+        print("action", repr(action))
         return action[0]
 
     def get_sampled_action(self, obs):
@@ -41,7 +42,7 @@ class ArgMaxPolicy(object):
         #print()
         # action = q_values.argmax(-1)
 
-        return action[0]
+        #return action[0]
 
     ####################################
     ####################################
